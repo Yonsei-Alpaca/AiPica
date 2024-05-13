@@ -1,4 +1,4 @@
-package com.Alpaca.AiPica;
+package com.alpaca.AiPica;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
