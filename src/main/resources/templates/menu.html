@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>메뉴</title>
+    <link rel="stylesheet" href="../static/menu.css" />
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+      $(document).ready(function () {
+        $(".menu__button, .menu-panel-overlay").click(function () {
+          $(".menu__button, .menu-panel-overlay, .menu-panel").toggleClass(
+            "is--active"
+          );
+          if ($(".dg-hd-mo-menu-panel-overlay").hasClass("is--active")) {
+            $(".dg-hd-mo-menu-panel-overlay").fadeIn();
+          } else {
+            $(".dg-hd-mo-menu-panel-overlay").fadeOut();
+          }
+        });
+        $(".menu-list__arrow").click(function () {
+          var $curruntClass = $(this).parents("li").hasClass("is--open");
+          $(".menu-label").removeClass("is--open");
+          $(this).parents("li").addClass("is--open");
+          if ($curruntClass) {
+            $(this).parents("li").removeClass("is--open");
+          }
+        });
+      });
+    </script>
+  </head>
+  <body>
+    <div class="menu">
+      <h1 class="menu__logo"></h1>
+      <nav class="menu-panel">
+        <b class="menu__button" title="menu"><span></span></b>
+        <div class="menu-content" style="text-align: center; margin-top: 500px">
+          <p style="font-size: 24px; margin-bottom: 20px">
+            로그인이 필요한 서비스입니다.
+          </p>
+          <button
+            style="font-size: 20px; margin-right: 10px"
+            onclick="location.href"
+          >
+            로그인
+          </button>
+          <button style="font-size: 20px">회원가입</button>
+        </div>
+      </nav>
+      <div class="menu-panel-overlay"></div>
+    </div>
+  </body>
+</html>
