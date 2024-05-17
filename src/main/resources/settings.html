@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>설정</title>
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/CSS/settings_style.css" />
+</head>
+
+<body>
+<div class="container">
+    <div class="header">
+        <img src="/images/menu.png" alt="Menu Icon" class="menu-icon" onclick="showMenu()"/>
+        <span class="header-title">설정</span>
+    </div>
+    <div class="profile">
+        <img src="/images/profile.png" alt="Profile Icon" class="profile-image" />
+        <div class="profile-name">알파카파카</div>
+        <button class="profile-edit-button" onclick="editProfile()">프로필 수정</button>
+    </div>
+    <div class="line"></div>
+    <div class="menu-list">
+        <div class="menu-item" onclick="navigateTo('notifications.html')">알림</div>
+        <div class="menu-item" onclick="navigateTo('display.html')">화면</div>
+        <div class="menu-item" onclick="navigateTo('sound.html')">음성</div>
+        <div class="menu-item" onclick="navigateTo('language.html')">언어</div>
+        <div class="menu-item" onclick="navigateTo('inquiries.html')">문의하기</div>
+        <div class="menu-item" onclick="navigateTo('privacy.html')">개인정보처리방침</div>
+    </div>
+</div>
+
+<script>
+    function showMenu() {
+        // 메뉴 화면으로 이동
+        window.location.href = 'menuB.html';
+    }
+
+    function editProfile() {
+        // 프로필 수정 화면으로 이동
+        alert('Edit profile screen');
+    }
+
+    function navigateTo(page) {
+        window.location.href = page;
+    }
+</script>
+</body>
+
+</html>
