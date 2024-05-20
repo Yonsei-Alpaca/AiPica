@@ -203,18 +203,18 @@
 <div class="container">
     <div class="header">
         <span class="header-title">
-            <img src="/images/menu.png" alt="Menu Icon" class="menu-icon" onclick="showMenu()"/>
+            <img src="static/img/menu.png" alt="Menu Icon" class="menu-icon" onclick="showMenu()"/>
             내 단어장
-            <img src="/images/pencil.png" alt="Pencil Icon" class="pencil-icon" />
+            <img src="static/img/pencil.png" alt="Pencil Icon" class="pencil-icon" />
         </span>
     </div>
     <div class="group-selector" onclick="showGroupSelector()">
-        <img src="/images/triangle.png" alt="Triangle Icon" class="triangle-icon" />모든 그룹
+        <img src="static/img/triangle.png" alt="Triangle Icon" class="triangle-icon" />모든 그룹
     </div>
     <div class="word-list">
         <div class="word-item" onclick="showImage('forecast')">
             <div class="bookmark" onclick="toggleBookmark(event)">
-                <img src="/images/bookmark.png" alt="Bookmark Icon" />
+                <img src="static/img/bookmark.png" alt="Bookmark Icon" />
             </div>
             <div class="word-text">
                 <div class="word">forecast</div>
@@ -222,20 +222,20 @@
                 <div class="translation">예측하다, 예보하다</div>
             </div>
             <div class="audio-icon" onclick="playAudio(event, 'forecast')">
-                <img src="/images/audio.png" alt="Audio Icon" />
+                <img src="static/img/audio.png" alt="Audio Icon" />
             </div>
         </div>
         <!-- Repeat similar blocks for other words -->
     </div>
     <div class="footer-buttons">
         <div class="footer-button" onclick="showBookmarks()">
-            <img src="/images/bookmark_filled.png" alt="Bookmark Icon" />
+            <img src="static/img/bookmark_filled.png" alt="Bookmark Icon" />
         </div>
         <div class="footer-button" onclick="showBooks()">
-            <img src="/images/book.png" alt="Book Icon" />
+            <img src="static/img/book.png" alt="Book Icon" />
         </div>
         <div class="footer-button" onclick="addWord()">
-            <img src="/images/add_icon.png" alt="Add Icon" />
+            <img src="static/img/add_icon.png" alt="Add Icon" />
         </div>
     </div>
 </div>
@@ -258,9 +258,9 @@
 
         bookmarkElement.classList.toggle('active');
         if (bookmarkElement.classList.contains('active')) {
-            bookmarkImg.src = '/images/bookmark_filled.png'; // 채워진 북마크 이미지 경로
+            bookmarkImg.src = 'static/img/bookmark_filled.png'; // 채워진 북마크 이미지 경로
         } else {
-            bookmarkImg.src = '/images/bookmark.png'; // 빈 북마크 이미지 경로
+            bookmarkImg.src = 'static/img/bookmark.png'; // 빈 북마크 이미지 경로
         }
 
         // Implement the logic to handle bookmark toggle

@@ -1,4 +1,4 @@
-package com.alpaca.AiPica;
+package com.Alpaca.AiPica;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;

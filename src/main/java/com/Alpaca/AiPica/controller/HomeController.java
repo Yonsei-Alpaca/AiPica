@@ -21,6 +21,11 @@ public class HomeController {
         return "register";
     }
 
+    @GetMapping("/mainScreen")
+    public String mainScreen() {
+        return "mainScreen";
+    }
+
     @GetMapping("/menu")
     public String menu() {
         return "menu";
@@ -30,4 +35,20 @@ public class HomeController {
     public String menuB() {
         return "menuB";
     }
+
+    @GetMapping("/settings")
+    public String settings() {
+        return "settings";
+    }
+
+    @GetMapping("/bookMark")
+    public String bookMark() {
+        return "bookMark";
+    }
+
+    @GetMapping("/addWord")
+    public String addWord() {
+        return "addWord";
+    }
 }
+
