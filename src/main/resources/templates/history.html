@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Activity History</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        canvas {
+            max-width: 800px;
+            max-height: 400px;
+        }
+    </style>
+</head>
+<body>
+<h2>활성 사용자 추이</h2>
+<label for="dateRange">날짜 범위:</label>
+<select id="dateRange">
+    <option value="7">7일</option>
+    <option value="30">한 달</option>
+</select>
+<canvas id="userActivityChart"></canvas>
+
+<script>
+    document.getElementById('dateRange').addEventListener('change', updateChart);
+    updateChart();
+
+    function updateChart() {
+        const range = document.getElementById('dateRange').value;
+        fetch(`/history/data?range=${range}`)
+            .then(response => response.json())
+            .then(data => {
+                console.log(data); // 데이터 확인을 위한 출력
+                const ctx = document.getElementById('userActivityChart').getContext('2d');
+                const chart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: data.labels,
+                        datasets: data.datasets
+                    },
+                    options: {
+                        scales: {
+                            y: {
+                                beginAtZero: true
+                            }
+                        }
+                    }
+                });
+            });
+    }
+</script>
+</body>
+</html>
