@@ -58,7 +58,7 @@
         .pencil-icon {
             width: 40px;
             height: 40px;
-            margin-left: auto
+            margin-left: auto;
         }
 
         .group-selector {
@@ -96,6 +96,12 @@
             padding: 10px;
             cursor: pointer;
             position: relative;
+            overflow: hidden;
+        }
+
+        .word-item.expanded {
+            height: 200px; /* 이미지가 추가로 들어갈 공간 확보 */
+            flex-direction: column;
         }
 
         .bookmark {
@@ -196,6 +202,24 @@
             width: 45px;
             height: 45px;
         }
+
+        .hidden {
+            display: none;
+        }
+
+        .image-container {
+            text-align: center;
+
+            width: 100%;
+        }
+
+        .image-container img {
+            width: 100%; /* 원하는 너비 값으로 변경 가능 */
+            max-width: 100px; /* 최대 너비를 설정할 수도 있습니다 */
+            height: auto; /* 높이를 자동으로 조절 */
+            display: block; /* 이미지가 중앙에 정렬되도록 설정 */
+            margin: 0 auto; /* 중앙 정렬 */
+        }
     </style>
 </head>
 
@@ -212,7 +236,7 @@
         <img src="/images/triangle.png" alt="Triangle Icon" class="triangle-icon" />모든 그룹
     </div>
     <div class="word-list">
-        <div class="word-item" onclick="showImage('forecast')">
+        <div class="word-item" onclick="showImage(event, 'forecast')">
             <div class="bookmark" onclick="toggleBookmark(event)">
                 <img src="/images/bookmark.png" alt="Bookmark Icon" />
             </div>
@@ -223,6 +247,9 @@
             </div>
             <div class="audio-icon" onclick="playAudio(event, 'forecast')">
                 <img src="/images/audio.png" alt="Audio Icon" />
+            </div>
+            <div class="image-container hidden">
+                <img src="/images/forecast.png" alt="forecast image" />
             </div>
         </div>
         <!-- Repeat similar blocks for other words -->
@@ -272,9 +299,11 @@
         alert('Play audio for ' + word);
     }
 
-    function showImage(word) {
-        // Implement the logic to show image for the given word
-        alert('Show image for ' + word);
+    function showImage(event, word) {
+        const wordItem = event.currentTarget;
+        const imageContainer = wordItem.querySelector('.image-container');
+        imageContainer.classList.toggle('hidden');
+        wordItem.classList.toggle('expanded');
     }
 
     function addWord() {

@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <title>커뮤니티</title>
+    <link href="https://fonts.googleapis.com/css?family=Inter&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="/CSS/community_styles.css" />
+</head>
+
+<body>
+<div class="container">
+    <div class="header">
+        <img src="/images/menu.png" alt="Menu Icon" class="menu-icon" onclick="showMenu()"/>
+        <span class="header-title">커뮤니티</span>
+    </div>
+    <div class="content">
+        <div class="popular-words-header">
+            <span class="popular-words-title">인기 단어 세트</span>
+            <span class="more-link" onclick="showMore()">더보기 ></span>
+        </div>
+        <div class="word-list">
+            <div class="word-item" onclick="showDetails()">
+                <div class="word-info-top">
+                    <div class="word-title">수능 초급 단어</div>
+                    <span class="time">1년 전</span>
+                </div>
+                <div class="word-info-bottom">
+                    <div class="author-info">
+                        <img src="/images/profile.png" alt="Profile Icon" class="profile-icon"/>
+                        <span class="author">알파카</span>
+                    </div>
+                    <span class="downloads">112k회 다운로드</span>
+                </div>
+            </div>
+            <div class="word-item" onclick="showDetails()">
+                <div class="word-info-top">
+                    <div class="word-title">수능 중급 단어</div>
+                    <span class="time">1년 전</span>
+                </div>
+                <div class="word-info-bottom">
+                    <div class="author-info">
+                        <img src="/images/profile.png" alt="Profile Icon" class="profile-icon"/>
+                        <span class="author">알파카</span>
+                    </div>
+                    <span class="downloads">11k회 다운로드</span>
+                </div>
+            </div>
+            <div class="word-item" onclick="showDetails()">
+                <div class="word-info-top">
+                    <div class="word-title">수능 고급 단어</div>
+                    <span class="time">1년 전</span>
+                </div>
+                <div class="word-info-bottom">
+                    <div class="author-info">
+                        <img src="/images/profile.png" alt="Profile Icon" class="profile-icon"/>
+                        <span class="author">알파카</span>
+                    </div>
+                    <span class="downloads">1k회 다운로드</span>
+                </div>
+            </div>
+            <div class="word-item" onclick="showDetails()">
+                <div class="word-info-top">
+                    <div class="word-title">누군가의 단어장</div>
+                    <span class="time">1년 전</span>
+                </div>
+                <div class="word-info-bottom">
+                    <div class="author-info">
+                        <img src="/images/profile.png" alt="Profile Icon" class="profile-icon"/>
+                        <span class="author">누군가</span>
+                    </div>
+                    <span class="downloads">13회 다운로드</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function showMenu() {
+        // 메뉴 화면으로 이동
+        window.location.href = 'menuB.html';
+    }
+
+    function showMore() {
+        // 단어 세트 리스트 화면으로 이동
+        window.location.href = 'wordSets.html';
+    }
+
+    function showDetails() {
+        // 각 단어장 세부사항 화면으로 이동
+        alert('show details');
+    }
+</script>
+</body>
+
+</html>
