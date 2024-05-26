@@ -1,0 +1,131 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
+    font-family: 'Inter', sans-serif;
+    background: #FFFFFF;
+}
+
+.container {
+    width: 360px;
+    height: 800px;
+    position: relative;
+    margin: auto;
+    overflow: hidden;
+}
+
+.header {
+    position: relative;
+    display: flex;
+    align-items: center;
+    padding: 20px 20px 0;
+}
+
+.header-title {
+    font-weight: 600;
+    font-size: 32px;
+    margin-left: 10px;
+}
+
+.menu-icon {
+    /* width: 27px;
+    height: 17px;
+    cursor: pointer; */
+    width: 30px;
+    height: 30px;
+    margin-right: 10px;
+    cursor: pointer;
+}
+
+.content {
+    margin-top: 20px;
+    padding: 0 20px;
+}
+
+.popular-words-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.popular-words-title {
+    font-weight: 600;
+    font-size: 32px;
+    color: #000000;
+}
+
+.more-link {
+    font-weight: 500;
+    font-size: 12px;
+    color: #6D6D6D;
+    cursor: pointer;
+}
+
+.word-list {
+    margin-top: 20px;
+}
+
+.word-item {
+    background: #D9D9D9;
+    border-radius: 8px;
+    padding: 10px;
+    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    cursor: pointer;
+}
+
+.word-info-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.word-info-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.word-title {
+    font-weight: 500;
+    font-size: 20px;
+    color: #000000;
+}
+
+.profile-icon {
+    width: 14px;
+    height: 14px;
+    border-radius: 50%;
+    margin-right: 5px;
+}
+
+.author-info {
+    display: flex;
+    align-items: center;
+}
+
+.author {
+    font-weight: 500;
+    font-size: 12px;
+    color: #6D6D6D;
+}
+
+.time {
+    font-weight: 500;
+    font-size: 12px;
+    color: #6D6D6D;
+}
+
+.downloads {
+    font-weight: 500;
+    font-size: 12px;
+    color: #6D6D6D;
+}
