@@ -36,5 +36,6 @@ public class HomeController {
     public String addWord() {
         return "addWord";
     }
+
 }
 

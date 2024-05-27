@@ -239,6 +239,7 @@
 </div>
 
 <script>
+    let generatedImageUrl = '';
     async function genImg() {
         var inputText = document.getElementById('word-input').innerText;
         var promptText = prompt("생성할 이미지를 묘사해주세요", inputText);
@@ -268,6 +269,7 @@
             console.log(responseData);
             var imgPreview = document.createElement('img');
             imgPreview.src = responseData.data[0].url;
+            generatedImageUrl = responseData.data[0].url; // Store generated image URL
             imgPreview.style.display = 'block';
 
             var previewContainer = document.getElementById('image-preview');
@@ -315,6 +317,7 @@
         formData.append('meaning', meaning);
         formData.append('memo', memo);
         formData.append('pronunciation', pronunciation);
+        formData.append('generatedImageUrl', generatedImageUrl); // Include generated image URL
         if (image) {
             formData.append('image', image);
         }
@@ -330,6 +333,7 @@
         };
         xhr.send(formData);
     }
+
 
     function toggleAutoMeaning() {
         const checkbox = document.getElementById('auto-meaning');

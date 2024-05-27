@@ -40,7 +40,8 @@ public class Word {
     @Column(name = "group_name")
     private String groupName;
 
-    @Column(name = "image")
+    @Lob
+    @Column(name = "image", columnDefinition="LONGBLOB")
     private byte[] image;
 
     @Size(max = 45)
