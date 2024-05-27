@@ -43,4 +43,8 @@ public class Word {
     @Column(name = "image")
     private byte[] image;
 
+    @Size(max = 45)
+    @NotNull
+    @Column(name = "email", nullable = false)
+    private String email;
 }

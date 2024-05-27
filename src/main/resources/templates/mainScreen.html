@@ -212,20 +212,20 @@
         <img src="static/img/triangle.png" alt="Triangle Icon" class="triangle-icon" />모든 그룹
     </div>
     <div class="word-list">
-        <div class="word-item" onclick="showImage('forecast')">
+        <!-- Thymleaf 문법을 사용하여 서버에서 받은 데이터를 렌더링 -->
+        <div th:each="word : ${words}" class="word-item" data-word="${word['word']}" onclick="showImage(this)">
             <div class="bookmark" onclick="toggleBookmark(event)">
                 <img src="static/img/bookmark.png" alt="Bookmark Icon" />
             </div>
             <div class="word-text">
-                <div class="word">forecast</div>
-                <div class="group">기본 그룹</div>
-                <div class="translation">예측하다, 예보하다</div>
+                <div class="word" th:text="${word['word']}">forecast</div>
+                <div class="group" th:text="${word['group_name']}">기본 그룹</div>
+                <div class="translation" th:text="${word['meaning']}">예측하다, 예보하다</div>
             </div>
-            <div class="audio-icon" onclick="playAudio(event, 'forecast')">
+            <div class="audio-icon" onclick="playAudio(event, this)">
                 <img src="static/img/audio.png" alt="Audio Icon" />
             </div>
         </div>
-        <!-- Repeat similar blocks for other words -->
     </div>
     <div class="footer-buttons">
         <div class="footer-button" onclick="showBookmarks()">
@@ -266,13 +266,15 @@
         // Implement the logic to handle bookmark toggle
     }
 
-    function playAudio(event, word) {
+    function playAudio(event, element) {
         event.stopPropagation();
+        const word = element.closest('.word-item').dataset.word;
         // Implement the logic to play audio for the given word
         alert('Play audio for ' + word);
     }
 
-    function showImage(word) {
+    function showImage(element) {
+        const word = element.dataset.word;
         // Implement the logic to show image for the given word
         alert('Show image for ' + word);
     }

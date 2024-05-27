@@ -11,10 +11,6 @@ public class HomeController {
         return "index";
     }
 
-    @GetMapping("/mainScreen")
-    public String mainScreen() {
-        return "mainScreen";
-    }
 
     @GetMapping("/menu")
     public String menu() {
