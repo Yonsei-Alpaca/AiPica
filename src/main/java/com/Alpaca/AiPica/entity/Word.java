@@ -44,7 +44,7 @@ public class Word {
     @Column(name = "image", columnDefinition="LONGBLOB")
     private byte[] image;
 
-    @Size(max = 45)
-    @Column(name = "email", nullable = false)
-    private String email;
+    @Size(max = 2048)
+    @Column(name = "image_url")
+    private String imageUrl;
 }

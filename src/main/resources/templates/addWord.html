@@ -162,22 +162,6 @@
             align-items: center;
         }
 
-        .image-upload input {
-            display: none;
-        }
-
-        .image-upload label {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            width: 120px;
-            height: 34px;
-            background-color: #6D6D6D;
-            color: white;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
         .image-preview {
             margin-top: 10px;
             width: 120px;
@@ -229,17 +213,18 @@
     </div>
 
     <div class="image-upload">
-        <label for="image-input">이미지 업로드</label>
-        <input type="file" id="image-input" accept="image/*" onchange="previewImage(event)">
+        <div>
+            <button type="button" onclick="genImg()">이미지 생성</button>
+        </div>
         <div class="image-preview" id="image-preview">
             <span>미리보기 없음</span>
         </div>
-        <button type="button" onclick="genImg()">이미지 생성</button>
+        <input type="file" id="image-input" style="display: none;">
+        <input type="hidden" id="image-url" name="imageUrl">
     </div>
 </div>
 
 <script>
-    let generatedImageUrl = '';
     async function genImg() {
         var inputText = document.getElementById('word-input').innerText;
         var promptText = prompt("생성할 이미지를 묘사해주세요", inputText);
@@ -266,37 +251,20 @@
             }
 
             const responseData = await response.json();
-            console.log(responseData);
-            var imgPreview = document.createElement('img');
-            imgPreview.src = responseData.data[0].url;
-            generatedImageUrl = responseData.data[0].url; // Store generated image URL
-            imgPreview.style.display = 'block';
+            var imageUrl = responseData.data[0].url;
 
-            var previewContainer = document.getElementById('image-preview');
-            previewContainer.innerHTML = '';
-            previewContainer.appendChild(imgPreview);
+            // Display the generated image
+            var imgPreview = document.getElementById('image-preview');
+            imgPreview.innerHTML = `<img src="${imageUrl}" alt="Generated Image">`;
+
+            // Set the image URL in the hidden input field
+            document.getElementById('image-url').value = imageUrl;
+
+            alert('이미지 생성 및 업로드 준비 완료');
+
         } catch (error) {
             console.error('Error:', error);
-            alert('이미지 생성 중 오류가 발생했습니다.');
-        }
-    }
-
-    function previewImage(event) {
-        const preview = document.getElementById('image-preview');
-        preview.innerHTML = '';
-        const file = event.target.files[0];
-        const reader = new FileReader();
-
-        reader.onload = function() {
-            const img = document.createElement('img');
-            img.src = reader.result;
-            preview.appendChild(img);
-        };
-
-        if (file) {
-            reader.readAsDataURL(file);
-        } else {
-            preview.innerHTML = '<span>미리보기 없음</span>';
+            alert('이미지 생성 중 오류가 발생했습니다: ' + error.message);
         }
     }
 
@@ -309,31 +277,26 @@
         const meaning = document.getElementById('meaning-input').innerText;
         const memo = document.getElementById('memo-input').innerText;
         const pronunciation = document.getElementById('pronunciation-input').innerText;
-        const imageInput = document.getElementById('image-input');
-        const image = imageInput.files[0];
+        const imageUrl = document.getElementById('image-url').value;
 
         const formData = new FormData();
         formData.append('word', word);
         formData.append('meaning', meaning);
         formData.append('memo', memo);
         formData.append('pronunciation', pronunciation);
-        formData.append('generatedImageUrl', generatedImageUrl); // Include generated image URL
-        if (image) {
-            formData.append('image', image);
-        }
+        formData.append('imageUrl', imageUrl);
 
         const xhr = new XMLHttpRequest();
         xhr.open('POST', '/words', true);
         xhr.onload = function() {
             if (xhr.status === 200) {
-                alert('Saved successfully');
+                alert('저장 성공');
             } else {
-                alert('An error occurred!');
+                alert('오류가 발생했습니다!');
             }
         };
         xhr.send(formData);
     }
-
 
     function toggleAutoMeaning() {
         const checkbox = document.getElementById('auto-meaning');

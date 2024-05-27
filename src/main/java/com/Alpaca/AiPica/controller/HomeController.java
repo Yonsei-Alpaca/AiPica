@@ -37,5 +37,10 @@ public class HomeController {
         return "addWord";
     }
 
+    @GetMapping("/test")
+    public String test() {
+        return "test";
+    }
+
 }
 
