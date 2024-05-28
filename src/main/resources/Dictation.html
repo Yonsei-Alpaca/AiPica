@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Flashcard</title>
+    <style>
+      body {
+        font-family: "Inter", sans-serif;
+        background: #ffffff;
+        margin: 0;
+        padding: 0;
+      }
+      .container {
+        position: relative;
+        width: 360px;
+        height: 500px;
+        margin: auto;
+        overflow: hidden;
+        background: #ffffff;
+        text-align: center;
+      }
+
+      .bookmark-icon {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 30px;
+        height: 30px;
+        background: url("/images/bookmark.png") no-repeat center center;
+        background-size: cover;
+      }
+
+      .audio-icon {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        background: url("/images/audio.png") no-repeat center center;
+        background-size: cover;
+      }
+
+      .flashcard {
+        position: absolute;
+        width: 321px;
+        height: 250px;
+        left: 19px;
+        top: 145px;
+        background: #d9d9d9;
+        border-radius: 8px;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+      .flashcard img {
+        width: 158px;
+        height: 149px;
+        margin-top: 40px;
+      }
+      .flashcard .word {
+        font-size: 30px;
+        line-height: 36px;
+        margin-top: 20px;
+        color: #000000;
+      }
+      .flashcard .ex {
+        font-size: 16px;
+        line-height: 19px;
+        margin: 10px 0 5px 0;
+        color: #000000;
+      }
+      .flashcard .example {
+        font-size: 16px;
+        line-height: 19px;
+        margin: 5px 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: #000000;
+      }
+      .flashcard .example img {
+        width: 17px;
+        height: 17px;
+        vertical-align: middle;
+        margin-left: 5px;
+        cursor: pointer;
+      }
+      .progress {
+        position: absolute;
+        width: 360px;
+        height: 12px;
+        left: 0;
+        top: 95px;
+        background: #d9d9d9;
+      }
+      .progress .bar {
+        height: 12px;
+        background: #303030;
+      }
+      .top-info {
+        position: absolute;
+        width: 55px;
+        height: 29px;
+        left: 151px;
+        top: 52px;
+        font-size: 24px;
+        line-height: 29px;
+        color: #000000;
+      }
+      .close-button {
+        position: absolute;
+        width: 50px;
+        height: 50px;
+        left: 10px;
+        top: 39.5px;
+        cursor: pointer;
+        background: url("/images/close.png") no-repeat center center;
+        background-size: cover;
+      }
+      .container {
+        position: relative;
+        width: 360px;
+        height: 800px;
+        margin: auto;
+        overflow: hidden;
+        background: #ffffff;
+      }
+      .input-container {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 100%;
+        text-align: center;
+      }
+
+      .input-container input {
+        width: calc(100% - 40px);
+        text-align: center;
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        margin-bottom: 20px;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        max-width: 320px;
+      }
+
+      .input-container button {
+        width: 100%;
+        padding: 10px 0;
+        margin-top: 10px;
+        font-size: 18px;
+        border: none;
+        border-radius: 8px;
+        background-color: #4caf50;
+        color: white;
+        cursor: pointer;
+      }
+      .input-container button:hover {
+        background-color: #45a049;
+      }
+      .result {
+        text-align: center;
+        font-size: 18px;
+        margin-top: 20px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <!-- 북마크 아이콘 -->
+      <div class="bookmark-icon"></div>
+      <!-- 오디오 아이콘 -->
+      <div class="audio-icon"></div>
+      <div class="close-button"></div>
+      <div class="progress">
+        <div class="bar" id="progress-bar"></div>
+      </div>
+      <div class="top-info" id="progress-text">4/32</div>
+      <div class="flashcard">
+        <div class="bookmark-icon"></div>
+        <div class="audio-icon"></div>
+        <div class="word">forecast</div>
+        <div class="ex">Ex)</div>
+        <div class="example">The weather forecast is not reliable at all.</div>
+      </div>
+      <div class="additional-content">
+        <img class="picture" src="/images/picture.jpg" alt="Picture" />
+        <!-- 다른 내용들 -->
+      </div>
+    </div>
+    <div class="input-container">
+      <input
+        type="text"
+        id="wordInput"
+        class="instruction"
+        placeholder="단어의 철자를 입력해주세요."
+        onkeypress="handleKeyPress(event)"
+      />
+      <div class="result" id="result"></div>
+    </div>
+
+    <script>
+      const totalWords = 32;
+      const currentWord = 1;
+
+      function updateProgressBar(total, current) {
+        const progressBar = document.getElementById("progress-bar");
+        const progressText = document.getElementById("progress-text");
+        const percentage = (current / total) * 100;
+        progressBar.style.width = `${percentage}%`;
+        progressText.textContent = `${current}/${total}`;
+      }
+
+      function checkWord() {
+        const word = document.querySelector(".word").textContent.toLowerCase();
+        const input = document.getElementById("wordInput").value.toLowerCase();
+        const result = document.getElementById("result");
+
+        if (input === word) {
+          result.textContent = "Correct!";
+          result.style.color = "green";
+        } else {
+          result.textContent = "Try again.";
+          result.style.color = "red";
+        }
+      }
+
+      function handleKeyPress(event) {
+        if (event.key === "Enter") {
+          checkWord();
+        }
+      }
+
+      updateProgressBar(totalWords, currentWord);
+    </script>
+  </body>
+</html>
