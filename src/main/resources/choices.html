@@ -18,11 +18,33 @@
         margin: auto;
         overflow: hidden;
         background: #ffffff;
+        text-align: center;
       }
+
+      .bookmark-icon {
+        position: absolute;
+        top: 10px;
+        left: 10px;
+        width: 30px;
+        height: 30px;
+        background: url("/images/bookmark.png") no-repeat center center;
+        background-size: cover;
+      }
+
+      .audio-icon {
+        position: absolute;
+        bottom: 10px;
+        right: 10px;
+        width: 30px;
+        height: 30px;
+        background: url("/images/audio.png") no-repeat center center;
+        background-size: cover;
+      }
+
       .flashcard {
         position: absolute;
         width: 321px;
-        height: 385px;
+        height: 250px;
         left: 19px;
         top: 145px;
         background: #d9d9d9;
@@ -95,53 +117,85 @@
         background: url("/images/close.png") no-repeat center center;
         background-size: cover;
       }
-      .buttons {
+      .input-container {
         position: absolute;
-        top: 582px;
-        width: 100%;
-        display: flex;
-        justify-content: space-around;
+        width: 321px;
+        left: 19px;
+        top: 410px;
+        text-align: center;
       }
-      .buttons .button {
-        width: 152px;
-        height: 46px;
+      .input-container input {
+        width: calc(100% - 40px);
+        text-align: center;
+        font-family: "Inter", sans-serif;
+        font-size: 16px;
+        margin-bottom: 20px;
+        padding: 10px;
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        max-width: 320px;
+      }
+      .input-container .buttons {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+      .input-container .button {
+        width: 70px;
+        height: 40px;
         background: #d9d9d9;
         border-radius: 8px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 20px;
+        display: inline-block;
+        text-align: center;
+        line-height: 40px;
+        font-size: 16px;
         color: #4c4c4c;
         box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.1);
         cursor: pointer;
+      }
+      .result {
+        text-align: center;
+        font-size: 18px;
+        margin-top: 20px;
       }
     </style>
   </head>
   <body>
     <div class="container">
+      <!-- 북마크 아이콘 -->
+      <div class="bookmark-icon"></div>
+      <!-- 오디오 아이콘 -->
+      <div class="audio-icon"></div>
       <div class="close-button"></div>
       <div class="progress">
         <div class="bar" id="progress-bar"></div>
       </div>
       <div class="top-info" id="progress-text">4/32</div>
       <div class="flashcard">
-        <img src="/images/forecast.png" alt="icon" />
+        <div class="bookmark-icon"></div>
+        <div class="audio-icon"></div>
         <div class="word">forecast</div>
         <div class="ex">Ex)</div>
-        <div class="example">
-          The weather forecast is not reliable at all.
-          <img src="/images/audio.png" alt="audio icon" />
-        </div>
+        <div class="example">The weather forecast is not reliable at all.</div>
       </div>
-      <div class="buttons">
-        <div class="button" id="know-button">아는 단어에요</div>
-        <div class="button" id="dont-know-button">모르는 단어에요</div>
+      <div class="additional-content">
+        <img class="picture" src="/images/picture.jpg" alt="Picture" />
+        <!-- 다른 내용들 -->
+      </div>
+      <div class="input-container">
+        <div class="buttons">
+          <div class="button" id="button1">Button 1</div>
+          <div class="button" id="button2">Button 2</div>
+          <div class="button" id="button3">Button 3</div>
+          <div class="button" id="button4">Button 4</div>
+        </div>
+        <div class="result" id="result"></div>
       </div>
     </div>
-
     <script>
       const totalWords = 32;
-      const currentWord = 1; // 현재 단어의 인덱스 (1부터 시작)
+      const currentWord = 1;
 
       function updateProgressBar(total, current) {
         const progressBar = document.getElementById("progress-bar");
@@ -149,6 +203,26 @@
         const percentage = (current / total) * 100;
         progressBar.style.width = `${percentage}%`;
         progressText.textContent = `${current}/${total}`;
+      }
+
+      function checkWord() {
+        const word = document.querySelector(".word").textContent.toLowerCase();
+        const input = document.getElementById("wordInput").value.toLowerCase();
+        const result = document.getElementById("result");
+
+        if (input === word) {
+          result.textContent = "Correct!";
+          result.style.color = "green";
+        } else {
+          result.textContent = "Try again.";
+          result.style.color = "red";
+        }
+      }
+
+      function handleKeyPress(event) {
+        if (event.key === "Enter") {
+          checkWord();
+        }
       }
 
       updateProgressBar(totalWords, currentWord);
