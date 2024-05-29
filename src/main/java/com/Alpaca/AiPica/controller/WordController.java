@@ -29,6 +29,7 @@ public class WordController {
                                         @RequestParam(value = "memo", required = false) String memo,
                                         @RequestParam(value = "pronunciation", required = false) String pronunciation,
                                         @RequestParam(value = "groupName", required = false) String groupName,
+                                        @RequestParam(value = "exampleSentence", required = false) String exampleSentence, // 새로운 필드 추가
                                         @RequestParam(value = "image", required = false) MultipartFile imageFile,
                                         @RequestParam(value = "imageUrl", required = false) String imageUrl) {
         Word newWord = new Word();
@@ -37,6 +38,7 @@ public class WordController {
         newWord.setMemo(memo);
         newWord.setPronunciation(pronunciation);
         newWord.setGroupName(groupName != null ? groupName : "그룹 미지정");
+        newWord.setExampleSentence(exampleSentence); // 새로운 필드 설정
         newWord.setImageUrl(imageUrl);
 
         if (imageFile != null && !imageFile.isEmpty()) {

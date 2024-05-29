@@ -47,4 +47,7 @@ public class Word {
     @Size(max = 2048)
     @Column(name = "image_url")
     private String imageUrl;
+
+    @Column(name = "exampleSentence")
+    private String exampleSentence;
 }
