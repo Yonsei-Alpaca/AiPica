@@ -21,6 +21,8 @@ public class WordService {
                 .word(wordRequest.getWord())
                 .meaning(wordRequest.getMeaning())
                 .memo(wordRequest.getMemo())
+                .imageUrl(wordRequest.getImageUrl())
+                .example(wordRequest.getExample())
                 .groupTag(wordRequest.getGroupTag())
                 .build()
                 ;

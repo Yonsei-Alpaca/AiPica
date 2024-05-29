@@ -4,12 +4,12 @@ import com.alpaca.AiPica.word.entity.WordEntity;
 import com.alpaca.AiPica.word.dto.WordRequest;
 import com.alpaca.AiPica.word.service.WordService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
-@RestController
-@RestControllerAdvice
+@Controller
 @RequiredArgsConstructor
 @RequestMapping("/alpaca/aipica")
 public class CrudController {

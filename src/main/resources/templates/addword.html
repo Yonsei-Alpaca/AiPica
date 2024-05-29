@@ -5,62 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
     <script th:src="@{/bootstrap.min.js}" type="application/javascript"></script>
+    <script th:src="@{/addword.js}" type="application/javascript"></script>
     <title>단어 추가</title>
-    <script>
-        var group_arr = []
-        function draw_tags(){
-            var parent = document.getElementById("tags");
-            var parent_hidden = document.getElementById("tags-hidden");
-            parent.textContent = "";
-            parent_hidden.textContent = "";
-            console.log(group_arr.join(','));
 
-            //parent_hidden.innerHTML = '<input type="hidden" name="group-tag" value="' +
-            //group_arr.join(',') +'">';
-
-            parent_hidden.firstChild.setAttribute("value", "group_arr.join(',')");
-
-            for(var i=0; i<group_arr.length;i++){
-
-                var new_div = document.createElement("div");
-                parent.innerHTML +=
-                '<button class="btn btn-secondary mx-2" onclick="del_group(this)">'+ group_arr[i] +
-                '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x"viewBox="0 0 16 16"><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" /></svg>' + 
-                '</button>';
-            }
-        }
-        function del_group(obj){
-
-            group_arr.splice(group_arr.indexOf(obj.textContent), 1);
-            draw_tags();
-            
-        }
-        function add_group() {
-
-            var new_group = document.getElementById("group-name");
-
-            if(group_arr.indexOf(new_group.value) < 0 &&new_group.value != ''){
-                group_arr.push(new_group.value)
-                draw_tags();
-            }
-            
-            new_group.value = "";
-            
-        }
-    </script>
 </head>
 
 <body>
 
     <!-- 제목 -->
-    <a id="close" th:href="@{/alpaca/aipica/wordlist}" style="display: none;"></a>
-    <label for="close" style="cursor: pointer;">
+    <a id="close" th:href="@{/alpaca/aipica/wordlist}" style="color: black">
         <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-x"
             viewBox="0 0 16 16">
             <path
                 d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
         </svg>
-    </label>
+    </a>
 
     <div class="text-center fs-3 fw-bold mt-5">
         단어 추가
@@ -83,9 +42,28 @@
 
             <div class="col-12 my-1">
                 <label for="memo" class="form-label">메모(선택)</label>
-                <input type="text" class="form-control" id="memo" name="meaning" placeholder="메모" value="">
+                <input type="text" class="form-control" id="memo" name="memo" placeholder="메모" value="">
             </div>
+
+            <div class="col-12 my-1">
+                <label for="example" class="form-label">예문(선택)</label>
+                <input type="text" class="form-control" id="example" name="example" placeholder="예문" value="">
+                <label for="example-gen" class="btn btn-light border col-12 mt-1">예문 생성</label>
+            </div>
+
+            <div class="col-12 my-1 image-upload">
+                <div>이미지 생성</div>
+                <div class="d-flex">
+                    <label for="image-gen" class="btn btn-light border col-12 mx-2">이미지 생성</label>
+                </div>
+                <div class="image-preview d-flex justify-content-center" id="image-preview">
+                    <span>미리보기 없음</span>
+                </div>
+            </div>
+
                 <input type="hidden" name="userName" th:value="${username}">
+                <input type="hidden" id="image-url" name="imageUrl" value="">
+
             
                 <div id="tags-hidden">
                     <input type="hidden" name="groupTag" value="">
@@ -111,6 +89,9 @@
                     </label>
                 </div>
             </div>
+
+        <button id="image-gen" style="display: none;" onclick="genImg()"></button>
+        <button id="example-gen" style="display: none;" onclick="generateExampleSentence()"></button>
         
         <button id="addgroup" style="display: none;" onclick="add_group()"></button>
         <center>

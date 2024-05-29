@@ -29,6 +29,8 @@ public class WordEntity {
     @Size(max=45)
     private String meaning;
     private String memo;
+    private String imageUrl;
+    private String example;
     private String groupTag;
 
 }

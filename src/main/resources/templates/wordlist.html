@@ -7,6 +7,32 @@
     <link rel="stylesheet" type="text/css" th:href="@{/sidebar.css}">
     <title>단어장</title>
     <script th:src="@{/bootstrap.min.js}" type="application/javascript"></script>
+    <script>
+        function speak(text, opt_prop) {
+           window.speechSynthesis.cancel(); // 현재 읽고있다면 초기화
+
+           const prop = opt_prop || {};
+
+           const speechMsg = new SpeechSynthesisUtterance();
+           speechMsg.rate = prop.rate || 1; // 속도: 0.1 ~ 10
+           speechMsg.pitch = prop.pitch || 1; // 음높이: 0 ~ 2
+           speechMsg.lang = prop.lang || "en-US";
+           speechMsg.text = text;
+
+           // SpeechSynthesisUtterance에 저장된 내용을 바탕으로 음성합성 실행
+           window.speechSynthesis.speak(speechMsg);
+       }
+       function playAudio(event, element) {
+           event.stopPropagation();
+           const wordElement = element.closest('.word-item').querySelector('.word');
+           const word = wordElement ? wordElement.textContent : '';
+           speak(word, {
+               rate: 1,
+               pitch: 1.2,
+               lang: "en-US"
+           });
+       }
+    </script>
     <style>
         /* 플로팅 버튼 */
         .floating-button {
@@ -34,8 +60,15 @@
         .word-card{
             display: none;
         }
-        .word-card:not(.word-card:checked) + label > div > svg{
+        .word-card:not(.word-card:checked) + label > div > div:nth-child(2){
             display: none;
+        }
+
+        .word-card:checked + label > div > div:nth-child(2){
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
         }
 
         .word-card + label{
@@ -89,7 +122,7 @@
     <input class="word-card" th:id="'word-'+${iterStat.count}" name="word" type="checkbox" onclick='deselect(this)' />
     <label th:for="'word-'+${iterStat.count}" class ="card shadow-sm m-3">
         <div class="card-body">
-            <div class="d-flex align-items-baseline justify-content-between">
+            <div class="word-item d-flex align-items-baseline justify-content-between">
                 <div class="d-flex align-baseline justify-content-between">
                     <button th:id="'button-'+${iterStat.count}" type="button" style="display: none;" onclick='console.log("clicked")'></button>
                     <label th:for="'button-'+${iterStat.count}" style="cursor: pointer;">
@@ -97,10 +130,10 @@
                             <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
                         </svg>
                     </label>
-                    <p class="fs-4 fw-bold align-middle mx-3" th:text="${word['word']}">단어</p>
+                    <p class="fs-4 fw-bold align-middle mx-3 word" th:text="${word['word']}">단어</p>
                     <p class="fs-6 text-secondary align-middle" th:text="${word['meaning']}">뜻</p>
                 </div>
-                <button type="button" class="btn btn-sm btn-outline-secondary">
+                <button type="button" class="btn btn-sm btn-outline-secondary" onclick="playAudio(event, this)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                         class="bi bi-volume-up-fill" viewBox="0 0 16 16">
                         <path
@@ -112,12 +145,17 @@
                     </svg>
                 </button>
             </div>
-            <svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg"
-                role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false">
-                <title>Placeholder</title>
-                <rect width="100%" height="100%" fill="#55595c"></rect><text x="50%" y="50%" fill="#eceeef"
-                    dy=".3em">이미지</text>
-            </svg>
+            <div>
+                <div style="display: flex;">
+                    <div class="mx-2 fs-5 fw-bold">예문:</div>
+                    <div class="fs-5" th:text="${word['example']}">
+                        this is example sentence.
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: center;">
+                    <img style="max-width: 70%;" th:src="${word['imageUrl']}"></img>
+                </div>
+            </div>
         </div>
     </label>
     </div>

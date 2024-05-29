@@ -21,5 +21,9 @@ public class WordRequest {
 
     private String memo;
 
+    private String imageUrl;
+
+    private String example;
+
     private String groupTag;
 }
