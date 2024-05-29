@@ -1,0 +1,53 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+    <title>회원가입</title>
+    <script th:src="@{/bootstrap.min.js}"></script>
+    <style>
+        td {
+            border : solid 1px gray;
+        }
+    </style>
+</head>
+<body>
+    <div class="my-3 border-bottom" style="margin: 0 auto; text-align: center;">
+        <div style="height: 20px;"></div>
+        <h1>회원가입</h1>
+        <div style="height: 20px;"></div>
+    </div>
+    <div>
+        <table style="width: 50%; margin: 0 auto;">
+            <tr>
+                <td style="border: 0px;">
+                    <form th:action="@{/alpaca/aipica/reg}" th:object="${userRequest}" method="post">
+                        <div class="mb-3">
+                            <label for="userName" class="form-label">ID</label>
+                            <input type="text" placeholder="name" th:field="*{userName}" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="email" class="form-label">이메일</label>
+                            <input type="email" placeholder="alpaca@alpaca.com" th:field="*{email}" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password1" class="form-label">비밀번호</label>
+                            <input type="password" placeholder="password" th:field="*{password1}" class="form-control">
+                        </div>
+                        <div class="mb-3">
+                            <label for="password2" class="form-label">비밀번호 확인</label>
+                            <input type="password" placeholder="password" th:field="*{password2}" class="form-control">
+                        </div>
+                        <div style="display: block; padding-bottom: 10px;">
+                            이미 회원이신가요?  
+                            <a style="color:cornflowerblue;" href="login.html">로그인</a>
+                            하기
+                        </div>
+                        <button type="submit" class="btn btn-secondary">회원가입</button>
+                    </form>
+                </td>
+            </tr>
+        </table>
+    </div>
+</body>
+</html>

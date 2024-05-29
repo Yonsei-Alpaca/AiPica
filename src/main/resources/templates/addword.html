@@ -1,0 +1,122 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+    <script th:src="@{/bootstrap.min.js}" type="application/javascript"></script>
+    <title>단어 추가</title>
+    <script>
+        var group_arr = []
+        function draw_tags(){
+            var parent = document.getElementById("tags");
+            var parent_hidden = document.getElementById("tags-hidden");
+            parent.textContent = "";
+            parent_hidden.textContent = "";
+            console.log(group_arr.join(','));
+
+            //parent_hidden.innerHTML = '<input type="hidden" name="group-tag" value="' +
+            //group_arr.join(',') +'">';
+
+            parent_hidden.firstChild.setAttribute("value", "group_arr.join(',')");
+
+            for(var i=0; i<group_arr.length;i++){
+
+                var new_div = document.createElement("div");
+                parent.innerHTML +=
+                '<button class="btn btn-secondary mx-2" onclick="del_group(this)">'+ group_arr[i] +
+                '<svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-x"viewBox="0 0 16 16"><path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" /></svg>' + 
+                '</button>';
+            }
+        }
+        function del_group(obj){
+
+            group_arr.splice(group_arr.indexOf(obj.textContent), 1);
+            draw_tags();
+            
+        }
+        function add_group() {
+
+            var new_group = document.getElementById("group-name");
+
+            if(group_arr.indexOf(new_group.value) < 0 &&new_group.value != ''){
+                group_arr.push(new_group.value)
+                draw_tags();
+            }
+            
+            new_group.value = "";
+            
+        }
+    </script>
+</head>
+
+<body>
+
+    <!-- 제목 -->
+    <a id="close" th:href="@{/alpaca/aipica/wordlist}" style="display: none;"></a>
+    <label for="close" style="cursor: pointer;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="50" height="50" fill="currentColor" class="bi bi-x"
+            viewBox="0 0 16 16">
+            <path
+                d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708" />
+        </svg>
+    </label>
+
+    <div class="text-center fs-3 fw-bold mt-5">
+        단어 추가
+
+    </div>
+    <hr>
+
+    <!-- 단어 목록 -->
+    <div class="row g-3 mx-5">
+        <form th:action="@{/alpaca/aipica/addword}" method="post">
+            <div class="col-12 my-1">
+                <label for="word" class="form-label">단어</label>
+                <input type="text" class="form-control" id="word" placeholder="단어" name="word" value="" required="">
+            </div>
+
+            <div class="col-12 my-1">
+                <label for="meaning" class="form-label">의미</label>
+                <input type="text" class="form-control" id="meaning" placeholder="의미" name="meaning" value="" required="">
+            </div>
+
+            <div class="col-12 my-1">
+                <label for="memo" class="form-label">메모(선택)</label>
+                <input type="text" class="form-control" id="memo" name="meaning" placeholder="메모" value="">
+            </div>
+                <input type="hidden" name="userName" th:value="${username}">
+            
+                <div id="tags-hidden">
+                    <input type="hidden" name="groupTag" value="">
+                </div>
+                <button id="submit" type="submit" style="display: none;"></button>
+            </form>
+
+            <label for="group-name" class="form-label mt-2 fs-4">그룹</label>
+            <div id="group-list" class="d-flex">
+
+                <div class="d-flex" id="tags"></div>
+
+                <div class="d-flex col-3 align-items-center">
+                    <input type="text" class="form-control" id="group-name" placeholder="그룹" value="">
+                    
+                    <label for="addgroup" class="mx-3"
+                        style="background-color: lightgray; cursor: pointer; border-radius: 50%;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                            class="bi bi-plus" viewBox="0 0 16 16">
+                            <path
+                                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
+                        </svg>
+                    </label>
+                </div>
+            </div>
+        
+        <button id="addgroup" style="display: none;" onclick="add_group()"></button>
+        <center>
+        <label for="submit" class="btn btn-secondary col-6 my-5">추가</label>
+        </center>
+    </div>
+</body>
+
+</html>
