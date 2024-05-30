@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>단어 및 이미지</title>
+    <style>
+        .container {
+            width: 80%;
+            margin: 0 auto;
+            text-align: center;
+        }
+        img {
+            max-width: 300px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>단어 및 이미지</h1>
+    <div id="word-container">
+        <div id="word-info">
+            <p id="word"></p>
+            <p id="meaning"></p>
+            <p id="pronunciation"></p>
+        </div>
+        <div id="image-container">
+            <img id="word-image" src="" alt="단어 이미지">
+        </div>
+    </div>
+    <button id="next-button">NEXT</button>
+</div>
+
+<script>
+    let currentIndex = 0;
+    let words = []; // 단어 데이터를 저장할 배열
+
+    async function fetchWords() {
+        try {
+            const response = await fetch('/words'); // 백엔드에서 단어 목록을 가져오는 API 엔드포인트를 호출
+            words = await response.json();
+            showWord(currentIndex);
+        } catch (error) {
+            console.error('Error fetching words:', error);
+        }
+    }
+
+    function showWord(index) {
+        const word = words[index];
+        if (word) {
+            document.getElementById('word').textContent = `단어: ${word.word}`;
+            document.getElementById('meaning').textContent = `의미: ${word.meaning}`;
+            document.getElementById('pronunciation').textContent = `발음: ${word.pronunciation}`;
+            document.getElementById('word-image').src = word.imageUrl || '이미지 없음';
+        } else {
+            document.getElementById('word').textContent = '';
+            document.getElementById('meaning').textContent = '';
+            document.getElementById('pronunciation').textContent = '';
+            document.getElementById('word-image').src = '';
+            alert('더 이상 단어가 없습니다.');
+        }
+    }
+
+    function onNextButtonClick() {
+        currentIndex++;
+        showWord(currentIndex);
+    }
+
+    // 페이지가 로드되면 fetchWords 함수 실행
+    window.onload = fetchWords;
+
+    // NEXT 버튼에 클릭 이벤트 추가
+    document.getElementById('next-button').addEventListener('click', onNextButtonClick);
+</script>
+</body>
+</html>
