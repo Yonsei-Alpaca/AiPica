@@ -22,6 +22,30 @@ function playAudio(event, element) {
        lang: "en-US"
    });
 }
+function update_bookmark(){
+    const form = document.createElement('form'); // form 태그 생성
+    form.setAttribute('method', 'post'); // 전송 방식 결정 (get or post)
+    form.setAttribute('action', url); // 전송할 url 지정
+
+    const data_1 = document.createElement('input'); // input 태그 생성
+    data_1.setAttribute('type', 'hidden'); // type = hidden
+    data_1.setAttribute('name', 'data1'); // 데이터의 key
+    data_1.setAttribute('value', data1); // 데이터의 value (여기서는 data1)
+
+    // 여러 개의 데이터를 보낼 경우 위와 같은 코드 반복
+    const data_2 = document.createElement('input');
+    data_2.setAttribute('type', 'hidden');
+    data_2.setAttribute('name', 'data2');
+    data_2.setAttribute('value', data2);
+
+    // form 태그에 input 태그 넣고 summit 가능하게 처리
+    form.appendChild(data_1);
+    form.appendChild(data_2);
+
+    document.body.appendChild(form);
+
+    form.submit();
+}
 
 function update_group(){
     var selectTag = document.getElementById('select-group');

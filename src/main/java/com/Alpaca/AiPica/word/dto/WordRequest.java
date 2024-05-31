@@ -26,4 +26,6 @@ public class WordRequest {
     private String example;
 
     private String groupTag;
+
+    private Boolean bookmark;
 }

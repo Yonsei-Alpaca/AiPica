@@ -32,5 +32,6 @@ public class WordEntity {
     private String imageUrl;
     private String example;
     private String groupTag;
+    private boolean bookmark;
 
 }
