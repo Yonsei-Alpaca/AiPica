@@ -19,7 +19,7 @@ public class SecurityConfig {
     @Bean
     SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests((authorizeHttpRequests) -> authorizeHttpRequests
-                .requestMatchers(new AntPathRequestMatcher("/**")).permitAll())
+                .requestMatchers(new AntPathRequestMatcher("/alpaca/aipica/**")).permitAll().anyRequest().permitAll())
                 .formLogin((formLogin) -> formLogin
                         .loginPage("/alpaca/aipica/login")
                         .defaultSuccessUrl("/alpaca/aipica/wordlist"))
