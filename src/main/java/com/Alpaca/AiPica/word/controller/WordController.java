@@ -38,6 +38,20 @@ public class WordController {
         model.addAttribute("username", authentication.getName());
         return "wordlist";
     }
+    @GetMapping(path="/bookmark")
+    public String bookmarkPage(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if("anonymousUser".equals(authentication.getName())){
+            return "redirect:/alpaca/aipica/login";
+        }
+
+        List<WordEntity> words = wordService.findAllByUserName(authentication.getName());
+        System.out.println(authentication.getName());
+        model.addAttribute("words", words);
+        model.addAttribute("username", authentication.getName());
+        return "bookmark";
+    }
 
     @GetMapping(path="/addword")
     public String addword(Model model, Principal principal){

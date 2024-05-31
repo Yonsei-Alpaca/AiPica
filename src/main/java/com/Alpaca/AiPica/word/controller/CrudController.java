@@ -32,7 +32,21 @@ public class CrudController {
     }
 
     @PostMapping(path="/bookmark/update/{id}")
-    public String updateTeam (
+    public String bookmarkUpdate (
+            @PathVariable Long id,
+            WordRequest wordRequest
+    ) {
+
+        Optional<WordEntity> o = wordService.findById(id);
+        WordEntity wordEntity = o.get();
+        System.out.println("UPDATE");
+        System.out.println(wordRequest);
+        WordEntity wordEntity1 = wordService.update(wordRequest, wordEntity);
+        return "redirect:/alpaca/aipica/bookmark";
+    }
+
+    @PostMapping(path="/wordlist/update/{id}")
+    public String wordlistUpdate (
             @PathVariable Long id,
             WordRequest wordRequest
     ) {

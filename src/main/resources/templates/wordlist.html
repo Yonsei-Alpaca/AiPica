@@ -21,6 +21,9 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 1;
+            border: 1px solid darkgray;
+            box-shadow: 2px 2px darkgray;
         }
 
         #button-bookmark {
@@ -109,7 +112,7 @@
                 <div class="d-flex align-baseline justify-content-between">
                     <button th:id="'button-'+${word['id']}" type="button" style="display: none;"></button>
                     <label th:for="'button-'+${word['id']}" style="cursor: pointer;">
-                        <form th:action="@{/alpaca/aipica/bookmark/update/{pathParam}(pathParam=${word['id']})}" method="post">
+                        <form th:action="@{/alpaca/aipica/wordlist/update/{pathParam}(pathParam=${word['id']})}" method="post">
                             <input type="hidden" name="userName" th:value="${word['userName']}">
                             <input type="hidden" name="word" th:value="${word['word']}">
                             <input type="hidden" name="meaning" th:value="${word['meaning']}">
