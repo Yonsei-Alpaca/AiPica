@@ -8,7 +8,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/sidebar.css}">
     <title>단어장</title>
     <script th:src="@{/bootstrap.min.js}" type="application/javascript"></script>
-    <script th:src="@{/wordlist.js}" type="application/javascript"></script>
+
 
     <style>
         /* 플로팅 버튼 */
@@ -150,6 +150,30 @@
                 wordArr[curr].classList.add('active');
             }
         }
+        function speak(text, opt_prop) {
+           window.speechSynthesis.cancel(); // 현재 읽고있다면 초기화
+
+           const prop = opt_prop || {};
+
+           const speechMsg = new SpeechSynthesisUtterance();
+           speechMsg.rate = prop.rate || 1; // 속도: 0.1 ~ 10
+           speechMsg.pitch = prop.pitch || 1; // 음높이: 0 ~ 2
+           speechMsg.lang = prop.lang || "en-US";
+           speechMsg.text = text;
+
+           // SpeechSynthesisUtterance에 저장된 내용을 바탕으로 음성합성 실행
+           window.speechSynthesis.speak(speechMsg);
+        }
+        function playAudio(event, element) {
+           event.stopPropagation();
+           const wordElement = element.closest('.word-item').querySelector('.word');
+           const word = wordElement ? wordElement.textContent : '';
+           speak(word, {
+               rate: 1,
+               pitch: 1.2,
+               lang: "en-US"
+           });
+        }
     </script>
 </head>
 
@@ -222,8 +246,8 @@
 
 <!-- 넘기기 (Navigation) 버튼 -->
 <div class="navigation-container">
-    <button class="navigation-button" onclick="prevCard()">이전</button>
-    <button class="navigation-button" onclick="nextCard()">아는 단어</button>
+    <button class="navigation-button" id="prev-button" onclick="prev_card()">이전</button>
+    <button class="navigation-button" id="next-button" onclick="next_card()">다음</button>
 </div>
 
 

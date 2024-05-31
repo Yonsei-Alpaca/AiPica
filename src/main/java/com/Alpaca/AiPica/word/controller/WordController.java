@@ -117,4 +117,33 @@ public class WordController {
         model.addAttribute("username", authentication.getName());
         return "flashcard";
     }
+
+    @GetMapping("/dictation")
+    public String getDictation(Model model) {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if ("anonymousUser".equals(authentication.getName())) {
+            return "redirect:/alpaca/aipica/login";
+        }
+
+        List<WordEntity> words = wordService.findAllByUserName(authentication.getName());
+        model.addAttribute("words", words);
+        model.addAttribute("username", authentication.getName());
+        return "dictation";
+    }
+
+    @GetMapping(path="/quiz")
+    public String quiz(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if("anonymousUser".equals(authentication.getName())){
+            return "redirect:/alpaca/aipica/login";
+        }
+
+        List<WordEntity> words = wordService.findAllByUserName(authentication.getName());
+        System.out.println(authentication.getName());
+        model.addAttribute("words", words);
+        model.addAttribute("username", authentication.getName());
+        return "quiz";
+    }
 }

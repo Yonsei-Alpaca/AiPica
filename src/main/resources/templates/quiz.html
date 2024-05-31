@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/sidebar.css}">
+    <title>받아쓰기</title>
+    <script th:src="@{/bootstrap.min.js}" type="application/javascript"></script>
+
+    <style>
+        /* 단어 카드 */
+
+        .word-card {
+            background-color: #f8f9fa;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            padding: 20px;
+            background-color: lightgray;
+            transition: transform 0.2s;
+        }
+
+        .container {
+            max-width: 600px;
+            margin: 50px auto;
+            text-align: center;
+        }
+
+        .card-body {
+            margin-bottom: 20px;
+        }
+
+        .word-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .word-item .word {
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .word-item .meaning {
+            font-size: 1rem;
+            color: #6c757d;
+        }
+
+        .example-container {
+            display: flex;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        .example-container .label {
+            font-weight: bold;
+            margin-right: 10px;
+        }
+
+        .example-container .example {
+            font-size: 1rem;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .image-container img {
+            max-width: 70%;
+            border-radius: 10px;
+        }
+
+        /* 넘기기 버튼 */
+        .navigation-button {
+            margin: 20px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            font-weight: bold;
+            border: none;
+            border-radius: 5px;
+            background-color: #6c757d;
+            color: white;
+            cursor: pointer;
+        }
+
+        .navigation-button:hover {
+            background-color: #5a6268;
+        }
+
+        .navigation-container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+
+    <script>
+        word_arr = [];
+        word_str_arr = [];
+        choice_arr = []
+        curr = 0;
+        window.addEventListener("load", function(event) {
+            var x = document.getElementsByClassName('card-body');
+            for (var i = 0; i < x.length; i++) {
+                word_arr.push(x[i]);
+            }
+            for (var i = 0; i < x.length; i++){
+                var wordElement = x[i].querySelector('.word');
+                word_str_arr.push(wordElement.textContent.trim());
+                choice_arr.push([wordElement.textContent.trim(), "NONE", "NONE", "NONE"]);
+            }
+            for(var i=0;i<x.length; i++){
+                for(var j=1;j<4; j++){
+                    var r = Math.floor(Math.random() * x.length);
+                    if(choice_arr[i].indexOf(word_str_arr[r]) >= 0){
+                        j--;
+                        continue;
+                    }
+                    choice_arr[i][j] = word_str_arr[r];
+                }
+                var position = Math.floor(Math.random() * 4);
+                var swap_tmp = choice_arr[i][0];
+                choice_arr[i][0] = choice_arr[i][position];
+                choice_arr[i][position] = swap_tmp;
+                const buttonElements = word_arr[i].querySelectorAll("button.choice")
+                for(var j=0;j<4;j++){
+                    console.log(buttonElements[j].innerHTML);
+                    buttonElements[j].innerHTML = choice_arr[i][j];
+                }
+            }
+            if (word_arr.length > 0)
+                word_arr[0].setAttribute("style", "");
+        });
+
+        function next_card() {
+            if (curr >= word_arr.length - 1) {
+                alert("마지막 단어입니다.");
+            } else {
+                word_arr[curr].setAttribute("style", "display:none;");
+                curr++;
+                word_arr[curr].setAttribute("style", "");
+            }
+        }
+
+        function prev_card() {
+            if (curr <= 0) {
+                alert("처음 단어입니다.");
+            } else {
+                word_arr[curr].setAttribute("style", "display:none;");
+                curr--;
+                word_arr[curr].setAttribute("style", "");
+            }
+        }
+
+        function checkWord(choice) {
+            const wordElement = word_arr[curr].querySelector('.word');
+            const resultElement = word_arr[curr].querySelector('#result');
+
+            console.log(choice_arr[curr][choice-1]+" "+wordElement.textContent.trim());
+            console.log(choice_arr[curr]);
+            if (choice_arr[curr][choice-1] === wordElement.textContent.trim()) {
+                resultElement.textContent = '정답입니다!';
+                resultElement.style.color = 'green';
+            } else {
+                resultElement.textContent = '틀렸습니다. 다시 시도하세요.';
+                resultElement.style.color = 'red';
+            }
+            resultElement.classList.remove('hidden');
+        }
+        function speak(text, opt_prop) {
+           window.speechSynthesis.cancel(); // 현재 읽고있다면 초기화
+
+           const prop = opt_prop || {};
+
+           const speechMsg = new SpeechSynthesisUtterance();
+           speechMsg.rate = prop.rate || 1; // 속도: 0.1 ~ 10
+           speechMsg.pitch = prop.pitch || 1; // 음높이: 0 ~ 2
+           speechMsg.lang = prop.lang || "en-US";
+           speechMsg.text = text;
+
+           // SpeechSynthesisUtterance에 저장된 내용을 바탕으로 음성합성 실행
+           window.speechSynthesis.speak(speechMsg);
+        }
+        function playAudio(event, element) {
+           event.stopPropagation();
+           const wordElement = element.closest('.word-item').querySelector('.word');
+           const word = wordElement ? wordElement.textContent : '';
+           speak(word, {
+               rate: 1,
+               pitch: 1.2,
+               lang: "en-US"
+           });
+        }
+    </script>
+</head>
+
+<body>
+<nav th:replace="~{menu :: sidebarFragment}"></nav>
+
+<!-- 제목 -->
+<div class="text-center fs-3 fw-bold mt-5">
+    사지선다
+</div>
+<hr>
+
+<!-- 단어 목록 -->
+<div th:each="word, iterStat: ${words}">
+    <div th:id="'card-'+${iterStat.count}" th:class="'card-body '+${word['groupTag']}" style="display:none" th:value="${word['word']}">
+        <div class="word-card">
+        <div class="word-item d-flex align-items-baseline justify-content-between">
+            <div class="d-flex align-baseline justify-content-between">
+                <button th:id="${word['id']}" style="display:none;" onclick="console.log('bookmark')"></button>
+                <label th:switch="${word['bookmark']}" th:for="${word['id']}" style="cursor:pointer;">
+                    <svg th:case="false" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                        <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+                    </svg>
+                    <svg th:case="true" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
+                        <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2"/>
+                    </svg>
+                </label>
+                <p class="word" style="display:none;" th:text="${word['word']}">단어</p>
+                <p class="fs-4 fw-bold align-middle mx-3" th:text="${word['meaning']}">뜻</p>
+            </div>
+            <button type="button" class="btn btn-sm btn-outline-secondary" onclick="playAudio(event, this)">
+                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-volume-up-fill" viewBox="0 0 16 16">
+                    <path d="M11.536 14.01A8.47 8.47 0 0 0 14.026 8a8.47 8.47 0 0 0-2.49-6.01l-.708.707A7.48 7.48 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303z"/>
+                    <path d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.48 5.48 0 0 1 11.025 8a5.48 5.48 0 0 1-1.61 3.89z"/>
+                    <path d="M8.707 11.182A4.5 4.5 0 0 0 10.025 8a4.5 4.5 0 0 0-1.318-3.182L8 5.525A3.5 3.5 0 0 1 9.025 8 3.5 3.5 0 0 1 8 10.475zM6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06"/>
+                </svg>
+            </button>
+        </div>
+        <div>
+            <div style="display: flex;">
+                <div class="label mx-2 fs-5 fw-bold">예문:</div>
+                <div class="example fs-5" th:text="${word['example']}">
+                    this is example sentence.
+                </div>
+            </div>
+            <div class="image-container"  style="display: flex; justify-content: center;">
+                <img style="max-width: 70%;" th:src="${word['imageUrl']}">
+            </div>
+        </div>
+
+        <div class="mt-3 mx-3 d-flex flex-column">
+            <button class="my-1 width-50 choice btn btn-secondary" onclick="checkWord(1)">1</button>
+            <button class="my-1 width-50 choice btn btn-secondary" onclick="checkWord(2)">2</button>
+            <button class="my-1 width-50 choice btn btn-secondary" onclick="checkWord(3)">3</button>
+            <button class="my-1 width-50 choice btn btn-secondary" onclick="checkWord(4)">4</button>
+
+            <p id="result" class="hidden"></p>
+        </div>
+        </div>
+    </div>
+</div>
+<!-- 넘기기 버튼 -->
+<div class="navigation-container">
+    <button class="navigation-button" id="prev-button" onclick="prev_card()">이전</button>
+    <button class="navigation-button" id="next-button" onclick="next_card()">다음</button>
+</div>
+</body>
+</html>
