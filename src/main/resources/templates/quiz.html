@@ -110,6 +110,13 @@
             for (var i = 0; i < x.length; i++) {
                 word_arr.push(x[i]);
             }
+
+            if(word_arr.length < 4){
+                alert("단어가 4개 이상이어야합니다.");
+                window.location.href = '/alpaca/aipica/wordlist';
+            }
+            return;
+
             for (var i = 0; i < x.length; i++){
                 var wordElement = x[i].querySelector('.word');
                 word_str_arr.push(wordElement.textContent.trim());
@@ -236,12 +243,7 @@
             </button>
         </div>
         <div>
-            <div style="display: flex;">
-                <div class="label mx-2 fs-5 fw-bold">예문:</div>
-                <div class="example fs-5" th:text="${word['example']}">
-                    this is example sentence.
-                </div>
-            </div>
+
             <div class="image-container"  style="display: flex; justify-content: center;">
                 <img style="max-width: 70%;" th:src="${word['imageUrl']}">
             </div>
