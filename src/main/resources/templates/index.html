@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+    <script th:src="@{/bootstrap.min.js}" type="application/javascript"></script>
+    <title>Login Page</title>
+    <style>
+    </style>
+  </head>
+
+  <body>
+  <div class="px-4 py-5 my-5 text-center">
+    <img class="d-block mx-auto mb-4" th:src="@{/alpaca.png}" alt="" width="150" height="150">
+    <h1 class="display-5 fw-bold text-body-emphasis">AiPica</h1>
+    <div class="col-lg-6 mx-auto">
+      <p class="lead mb-4">AiPica는 AI를 이용한 이미지 / 예문 생성기능을 제공하여 <br>효율적인 단어학습을 돕는 단어장입니다.</p>
+      <div class="d-grid gap-2 d-sm-flex justify-content-sm-center">
+        <a class="btn btn-light btn-lg px-4 gap-3 border" th:href="@{login}">로그인</a>
+        <a class="btn btn-light btn-lg px-4 border" th:href="@{signup}">회원가입</a>
+      </div>
+    </div>
+  </div>
+  </body>
+</html>
