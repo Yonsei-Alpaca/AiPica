@@ -131,7 +131,7 @@
             }
         });
 
-        function nextCard() {
+        function next_card() {
             if (curr >= wordArr.length - 1) {
                 alert("마지막 단어입니다.");
             } else {
@@ -141,7 +141,7 @@
             }
         }
 
-        function prevCard() {
+        function prev_card() {
             if (curr <= 0) {
                 alert("처음 단어입니다.");
             } else {
@@ -181,23 +181,6 @@
 
 <nav th:replace="~{menu :: sidebarFragment}"></nav>
 
-<!-- 우측 하단 플로팅 버튼 -->
-<a class="floating-button" id="button-bookmark" th:href="@{/alpaca/aipica/bookmark}">
-    <svg xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-bookmarks-fill"
-         viewBox="0 0 16 16" style="color: black;">
-        <path
-                d="M2 4a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L7 13.101l-4.223 2.815A.5.5 0 0 1 2 15.5z" />
-        <path d="M4.268 1A2 2 0 0 1 6 0h6a2 2 0 0 1 2 2v11.5a.5.5 0 0 1-.777.416L13 13.768V2a1 1 0 0 0-1-1z" />
-    </svg>
-</a>
-
-<a class="floating-button" id="button-addword" th:href="@{/alpaca/aipica/addword}">
-    <svg xmlns="http://www.w3.org/2000/svg" width="45" height="45" fill="currentColor" class="bi bi-plus"
-         viewBox="0 0 16 16" style="color: black;">
-        <path
-                d="M8 4a.5.5 0 0 1 .5.5v3h3a.5.5 0 0 1 0 1h-3v3a.5.5 0 0 1-1 0v-3h-3a.5.5 0 0 1 0-1h3v-3A.5.5 0 0 1 8 4" />
-    </svg>
-</a>
 
 <!-- 제목 -->
 <div class="text-center fs-3 fw-bold mt-5">

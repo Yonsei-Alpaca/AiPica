@@ -114,8 +114,9 @@
             if(word_arr.length < 4){
                 alert("단어가 4개 이상이어야합니다.");
                 window.location.href = '/alpaca/aipica/wordlist';
+                return;
             }
-            return;
+
 
             for (var i = 0; i < x.length; i++){
                 var wordElement = x[i].querySelector('.word');
