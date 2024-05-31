@@ -102,4 +102,19 @@ public class WordController {
         model.addAttribute("username", principal.getName());
         return "addword";
     }
+
+    @GetMapping(path="/flashcard")
+    public String flashcard(Model model){
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+        if("anonymousUser".equals(authentication.getName())){
+            return "redirect:/alpaca/aipica/login";
+        }
+
+        List<WordEntity> words = wordService.findAllByUserName(authentication.getName());
+        System.out.println(authentication.getName());
+        model.addAttribute("words", words);
+        model.addAttribute("username", authentication.getName());
+        return "flashcard";
+    }
 }

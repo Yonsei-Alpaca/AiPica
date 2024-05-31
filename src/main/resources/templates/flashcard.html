@@ -1,0 +1,127 @@
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" type="text/css" th:href="@{/bootstrap.min.css}">
+    <link rel="stylesheet" type="text/css" th:href="@{/sidebar.css}">
+    <title>단어장</title>
+    <script th:src="@{/bootstrap.min.js}" type="application/javascript"></script>
+
+    <style>
+        /* 단어 카드 */
+        .word-card{
+            display: none;
+        }
+        .word-card:not(.word-card:checked) + label > div > div:nth-child(2){
+            display: none;
+        }
+
+        .word-card:checked + label > div > div:nth-child(2){
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .word-card + label{
+            background-color: lightgray;
+        }
+    </style>
+    <script>
+        word_arr = [];
+        curr = 0;
+        window.addEventListener("load", function(event) {
+
+            var x = document.getElementsByClassName('card-body');
+
+            for (var i = 0; i < x.length; i++){
+                word_arr.push(x[i]);
+                console.log(x[i].id);
+            }
+            if(word_arr.length > 0)
+                word_arr[0].setAttribute("style","");
+        });
+
+        function next_card(){
+            if(curr >= word_arr.length-1){
+                alert("마지막 단어입니다.");
+            }else{
+                word_arr[curr].setAttribute("style","display:none;");
+                curr++;
+                word_arr[curr].setAttribute("style","");
+            }
+        }
+        function prev_card(){
+            if(curr <= 0){
+                alert("처음 단어입니다.");
+            }else{
+                word_arr[curr].setAttribute("style","display:none;");
+                curr--;
+                word_arr[curr].setAttribute("style","");
+            }
+        }
+    </script>
+</head>
+
+<body>
+
+    <nav th:replace="~{menu :: sidebarFragment}"></nav>
+
+    <!-- 제목 -->
+    
+    <div class="text-center fs-3 fw-bold mt-5">
+        플래시 카드
+    </div>
+    <hr>
+    
+    <!-- 단어 목록 -->
+    <div th:each="word, iterStat: ${words}">
+        <div th:id="'card-'+${iterStat.count}" th:class="'card-body '+${word['groupTag']}" style="display:none">
+            <div class="word-item d-flex align-items-baseline justify-content-between">
+                <div class="d-flex align-baseline justify-content-between">
+                    <button th:id="${word['id']}" style="display:none;" onclick="console.log('bookmark')"></button>
+                    <label th:switch="${word['bookmark']}" th:for="${word['id']}" style="cursor:pointer;">
+                        <svg th:case="false" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-bookmark" viewBox="0 0 16 16">
+                            <path d="M2 2a2 2 0 0 1 2-2h8a2 2 0 0 1 2 2v13.5a.5.5 0 0 1-.777.416L8 13.101l-5.223 2.815A.5.5 0 0 1 2 15.5zm2-1a1 1 0 0 0-1 1v12.566l4.723-2.482a.5.5 0 0 1 .554 0L13 14.566V2a1 1 0 0 0-1-1z"/>
+                        </svg>
+                        <svg th:case="true" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor" class="bi bi-bookmark-fill" viewBox="0 0 16 16">
+                            <path d="M2 2v13.5a.5.5 0 0 0 .74.439L8 13.069l5.26 2.87A.5.5 0 0 0 14 15.5V2a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2"/>
+                        </svg>
+                    </label>
+                    <p class="fs-4 fw-bold align-middle mx-3 word" th:text="${word['word']}">단어</p>
+                    <p class="fs-6 text-secondary align-middle" th:text="${word['meaning']}">뜻</p>
+                </div>
+                <button type="button" class="btn btn-sm btn-outline-secondary" onclick="playAudio(event, this)">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                        class="bi bi-volume-up-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M11.536 14.01A8.47 8.47 0 0 0 14.026 8a8.47 8.47 0 0 0-2.49-6.01l-.708.707A7.48 7.48 0 0 1 13.025 8c0 2.071-.84 3.946-2.197 5.303z" />
+                        <path
+                            d="M10.121 12.596A6.48 6.48 0 0 0 12.025 8a6.48 6.48 0 0 0-1.904-4.596l-.707.707A5.48 5.48 0 0 1 11.025 8a5.48 5.48 0 0 1-1.61 3.89z" />
+                        <path
+                            d="M8.707 11.182A4.5 4.5 0 0 0 10.025 8a4.5 4.5 0 0 0-1.318-3.182L8 5.525A3.5 3.5 0 0 1 9.025 8 3.5 3.5 0 0 1 8 10.475zM6.717 3.55A.5.5 0 0 1 7 4v8a.5.5 0 0 1-.812.39L3.825 10.5H1.5A.5.5 0 0 1 1 10V6a.5.5 0 0 1 .5-.5h2.325l2.363-1.89a.5.5 0 0 1 .529-.06" />
+                    </svg>
+                </button>
+            </div>
+            <div>
+                <div style="display: flex;">
+                    <div class="mx-2 fs-5 fw-bold">예문:</div>
+                    <div class="fs-5" th:text="${word['example']}">
+                        this is example sentence.
+                    </div>
+                </div>
+                <div style="display: flex; justify-content: center;">
+                    <img style="max-width: 70%;" th:src="${word['imageUrl']}">
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- 넘기기 버튼 -->
+    <button id="prev" onclick="prev_card()">이전</button>
+    <button id="next" onclick="next_card()">다음</button>
+
+
+</body>
+
+</html>
