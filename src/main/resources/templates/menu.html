@@ -22,8 +22,8 @@
             </button>
             <div class="collapse show" id="home-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded fs-5">내 단어장</a></li>
-                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded fs-5">북마크</a></li>
+                    <li><a th:href="@{/alpaca/aipica/wordlist}" class="link-dark d-inline-flex text-decoration-none rounded fs-5">내 단어장</a></li>
+                    <li><a th:href="@{/alpaca/aipica/bookmark}" class="link-dark d-inline-flex text-decoration-none rounded fs-5">북마크</a></li>
                 </ul>
             </div>
         </li>
@@ -34,10 +34,9 @@
             </button>
             <div class="collapse" id="dashboard-collapse">
                 <ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded fs-5">플래시카드</a></li>
-                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded fs-5">받아쓰기</a></li>
-                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded fs-5">사지선다</a></li>
-                    <li><a href="#" class="link-dark d-inline-flex text-decoration-none rounded fs-5">학습기록</a></li>
+                    <li><a th:href="@{/alpaca/aipica/flashcard}" class="link-dark d-inline-flex text-decoration-none rounded fs-5">플래시카드</a></li>
+                    <li><a th:href="@{/alpaca/aipica/dictation}" class="link-dark d-inline-flex text-decoration-none rounded fs-5">받아쓰기</a></li>
+                    <li><a th:href="@{/alpaca/aipica/quiz}" class="link-dark d-inline-flex text-decoration-none rounded fs-5">사지선다</a></li>
                 </ul>
             </div>
         </li>
