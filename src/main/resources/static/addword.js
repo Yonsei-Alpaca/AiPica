@@ -6,10 +6,12 @@ function draw_tags(){
     parent_hidden.textContent = "";
     console.log(group_arr.join(','));
 
-    //parent_hidden.innerHTML = '<input type="hidden" name="group-tag" value="' +
-    //group_arr.join(',') +'">';
+    var tmp_arr = []
+    for(var i=0;i<group_arr.length;i++){
+        tmp_arr.push(group_arr[i].replaceAll(" ","_"));
+    }
 
-    parent_hidden.firstChild.setAttribute("value", "group_arr.join(',')");
+    parent_hidden.setAttribute("value", tmp_arr.join(' '));
 
     for(var i=0; i<group_arr.length;i++){
 
@@ -30,7 +32,7 @@ function add_group() {
 
     var new_group = document.getElementById("group-name");
 
-    if(group_arr.indexOf(new_group.value) < 0 &&new_group.value != ''){
+    if(group_arr.indexOf(new_group.value) < 0 && new_group.value != ''){
         group_arr.push(new_group.value)
         draw_tags();
     }
@@ -38,6 +40,13 @@ function add_group() {
     new_group.value = "";
 
 }
+
+function replace_space_comma(element){
+
+    var text = element.value;
+    element.value = text.replaceAll(",","");
+}
+
 function previewImage(event) {
     const preview = document.getElementById('image-preview');
     preview.innerHTML = '';
